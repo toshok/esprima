@@ -86,7 +86,7 @@
                     '|', '^', '!', '~', '&&', '||', '?', ':', '===', '==', '>=',
                     '<=', '<', '>', '!=', '!=='];
 
-    Syntax = {
+    var S = {
         AssignmentExpression: 'AssignmentExpression',
         AssignmentPattern: 'AssignmentPattern',
         ArrayExpression: 'ArrayExpression',
@@ -153,6 +153,28 @@
         WithStatement: 'WithStatement',
         YieldExpression: 'YieldExpression'
     };
+
+    // Deep copy.
+    /* istanbul ignore next */
+    export let Syntax = (function () {
+        var name, types = {};
+
+        if (typeof Object.create === 'function') {
+            types = Object.create(null);
+        }
+
+        for (name in S) {
+            if (S.hasOwnProperty(name)) {
+                types[name] = S[name];
+            }
+        }
+
+        if (typeof Object.freeze === 'function') {
+            Object.freeze(types);
+        }
+
+        return types;
+    }());
 
     PlaceHolders = {
         ArrowParameterPlaceHolder: 'ArrowParameterPlaceHolder'
@@ -5557,26 +5579,4 @@
 
     // Sync with *.json manifests.
     export let version = '2.4.0';
-
-    // Deep copy.
-    /* istanbul ignore next */
-    export let Syntax = (function () {
-        var name, types = {};
-
-        if (typeof Object.create === 'function') {
-            types = Object.create(null);
-        }
-
-        for (name in Syntax) {
-            if (Syntax.hasOwnProperty(name)) {
-                types[name] = Syntax[name];
-            }
-        }
-
-        if (typeof Object.freeze === 'function') {
-            Object.freeze(types);
-        }
-
-        return types;
-    }());
 /* vim: set sw=4 ts=4 et tw=80 : */
